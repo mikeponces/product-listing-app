@@ -1,0 +1,48 @@
+<div class="container">
+    <h1>Product Listing</h1>
+    <div class="filters">
+        <div class="filter-controls">
+            <div class="form-group">
+                <label for="searchText">Search Products:</label>
+                <input id="searchText" type="text" class="form-control" placeholder="Search by name or description"
+                    [(ngModel)]="filterText">
+            </div>
+            <div class="form-group">
+                <label for="category">Filter by Category:</label>
+                <select id="category" class="form-control" [(ngModel)]="filterCategory">
+                    <option value="">All Categories</option>
+                    <option *ngFor="let category of categories" [value]="category">{{
+                        category }}</option>
+                </select>
+            </div>
+            <div class="form-group checkbox">
+                <label>
+                    <input type="checkbox" [(ngModel)]="showOutOfStock"> Show Out of Stock Items
+                </label>
+            </div>
+            <button class="btn-reset" (click)="resetFilters()">Reset Filters</button>
+        </div>
+        <div class="filter-summary">
+            <p>Showing {{ filteredProducts.length }} of {{ products.length }}
+                products</p>
+        </div>
+    </div>
+    <div class="product-grid">
+        <div *ngFor="let product of filteredProducts" class="product-card">
+            <img [src]="product.imageUrl" alt="{{ product.name }}" class="productimage">
+            <div class="product-info">
+                <h3>{{ product.name }}</h3>
+                <p class="description">{{ product.description }}</p>
+                <p class="price">${{ product.price.toFixed(2) }}</p>
+                <p class="category">Category: {{ product.category }}</p>
+                <p class="rating">Rating: {{ product.rating }}/5.0</p>
+                <p class="stock" [class.out-of-stock]="!product.inStock">
+                    {{ product.inStock ? 'In Stock' : 'Out of Stock' }}
+                </p>
+                <div class="tags">
+                    <span *ngFor="let tag of product.tags" class="tag">{{ tag }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
